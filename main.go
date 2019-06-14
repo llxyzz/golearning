@@ -4,6 +4,9 @@ import "golearning/part0"
 
 func main()  {
 
-	part0.RunWebServer()
+	//var s string
+	//fmt.Println(s)
+
+	part0.Test()
 
 }
