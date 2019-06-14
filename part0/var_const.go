@@ -35,16 +35,13 @@ func Test() {
 	//fmt.Println(f() == f())		//false
 
 	p := new(int)
-	fmt.Println(p)				//0xc000054190
+	fmt.Println(p) //0xc000054190
 	*p = 1000
-	fmt.Println(*p)				//1000
-
+	fmt.Println(*p) //1000
 
 }
-
 
 func f() *int {
 	y := 1
 	return &y
 }
-
