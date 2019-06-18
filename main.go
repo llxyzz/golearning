@@ -1,12 +1,34 @@
 package main
 
-import "golearning/part0"
+import (
+	"fmt"
+	"golearning/part2"
+	"strconv"
+)
 
-func main()  {
+func main() {
 
-	//var s string
-	//fmt.Println(s)
+	//var s = "D:/a/b/c/d.go"
+	//
+	//fmt.Println(part2.BaseName(s))
 
-	part0.Test()
+	var s = 1234567
+	//fmt.Println(part2.SplitInt(strconv.Itoa(s)))
+
+	//fmt.Println(part2.IntsToString([]int{1,2,3}))
+
+	fmt.Println(part2.SplitIntByBuffer(strconv.Itoa(s)))
+
+	type Count int
+
+	const (
+		FIRST Count = 1 + iota
+		SECOND
+		THIRD
+		FOURTH
+		FIFTH
+	)
+
+	fmt.Println(FIRST, SECOND, THIRD, FOURTH, FIFTH) //1 2 3 4 5
 
 }

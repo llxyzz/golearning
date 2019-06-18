@@ -20,7 +20,7 @@ func FetchUrlAll() {
 
 	for _, url := range urlArr {
 		go fetch(url, ch)
-		go fetch(url,ch1)
+		go fetch(url, ch1)
 	}
 
 	for range urlArr {
@@ -48,10 +48,10 @@ func fetch(url string, ch chan<- string) {
 	resp.Body.Close()
 
 	if err != nil {
-		ch <- fmt.Sprintf("当访问%s的时候,%v\n",url, err)
+		ch <- fmt.Sprintf("当访问%s的时候,%v\n", url, err)
 		return
 	}
 
 	secs := time.Since(start).Seconds()
-	ch <- fmt.Sprintf("%.3f----%7d----%s",secs,nbytes,url)
+	ch <- fmt.Sprintf("%.3f----%7d----%s", secs, nbytes, url)
 }

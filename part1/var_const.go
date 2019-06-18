@@ -2,7 +2,6 @@ package part0
 
 import (
 	"fmt"
-	"strconv"
 )
 
 const final = 13213
@@ -45,8 +44,19 @@ func Test() {
 
 	fmt.Printf("斐波那契数列的第%v个数是%v\n", 15, fib(15))
 
-	s := "13213"
-	fmt.Println(strconv.Atoi(s))
+	s := "this is a string"
+	fmt.Println(len(s)) //16
+	fmt.Println(s[0:4]) //this
+	fmt.Println(s[5:7]) //is
+	fmt.Println(s[:7])  //this is
+	fmt.Println(s[5:])  //is a string
+	fmt.Println(s[:])   //this is a string
+
+	i := 8
+	fmt.Printf("%d\n", i)
+	fmt.Printf("%b\n", i)
+	fmt.Printf("%o\n", i)
+	fmt.Printf("%ox\n", i)
 
 }
 
