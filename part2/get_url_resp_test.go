@@ -6,9 +6,11 @@ import (
 	"log"
 	"net/http"
 	"net/url"
+	"os"
 	"strconv"
 	"strings"
 	"testing"
+	"text/template"
 	"time"
 )
 
@@ -63,7 +65,7 @@ func SearchIssue(key []string) (*IssueSearchResult, error) {
 	return &result, err
 }
 
-func TestSearch(t *testing.T) {
+func TestSearchIssue(t *testing.T) {
 	key := []string{"go", "java"}
 
 	result, err := SearchIssue(key)
@@ -73,21 +75,48 @@ func TestSearch(t *testing.T) {
 
 	fmt.Println("the total result is :" + strconv.Itoa(result.TotalCount))
 
-	//data, err := json.MarshalIndent(result, "", "	")
-	//if err != nil {
-	//	log.Fatalf("JSON marshaling failed: %s", err)
-	//}
-	//fmt.Printf("%s\n", data)
+	//为了便于输出打印显示，只选取前3条items的数据
+	result.Items = result.Items[:3]
+	data, err := json.MarshalIndent(result, "", "	")
+	if err != nil {
+		log.Fatalf("JSON marshaling failed: %s", err)
+	}
+	fmt.Printf("%s\n", data)
 
-	for _, v := range result.Items {
-		fmt.Printf("%s\n", v.HTMLURL)
+	//for _, v := range result.Items {
+	//	fmt.Printf("%s\n", v.HTMLURL)
+	//}
+}
+
+func daysAgo(t time.Time) int {
+	return int(time.Since(t).Hours() / 24)
+}
+
+func TestTextTemplate(t *testing.T) {
+	const templateText = `the total issue is : {{.TotalCount}}
+		{{range .Items}}
+		------------
+		Numbers:	{{.Number}}
+		User:		{{.User.Login}}
+		Title:		{{.Title | printf "%.64s"}}
+		Age:		{{.CreatedAt | daysAgo}} days ago
+		{{end}}`
+
+	var report = template.Must(template.New("issueList").Funcs(template.
+		FuncMap{"daysAgo": daysAgo}).Parse(templateText))
+
+	key := []string{"go", "java"}
+
+	result, err := SearchIssue(key)
+	//为了便于输出打印显示，只选取前3条items的数据
+	result.Items = result.Items[:3]
+	if err != nil {
+		log.Fatalf("the error is %v", err)
 	}
 
-	const template = `the total issue is : {{.TotalCount}}
-		{{range .Items}}------------
-		
+	if err := report.Execute(os.Stdout, result); err != nil {
+		log.Fatalf("the error is %v", err)
+	}
 
-			
-		`
-
+	fmt.Println()
 }
