@@ -62,9 +62,9 @@ func FetchUrl(urls []string) (s string) {
 		if err != nil {
 			log.Fatalf("fetch failed : %v\n", err)
 		}
+		defer resp.Body.Close()
 		byte, err := ioutil.ReadAll(resp.Body)
 		//byte, err := ioutil.ReadAll(transform.NewReader(resp.Body, simplifiedchinese.HZGB2312.NewEncoder()))
-		resp.Body.Close()
 		if err != nil {
 			log.Fatalf("fetch reading content failed: %v\n", err)
 		}

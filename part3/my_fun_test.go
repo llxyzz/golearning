@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"golang.org/x/net/html"
 	"golearning/part1"
-	"net/http"
+	"io"
 	"strings"
 	"testing"
 )
@@ -76,12 +76,92 @@ func TestOutline(t *testing.T) {
 func TestOutline2(t *testing.T) {
 	var url = []string{"https://www.baidu.cn"}
 	s := part1.FetchUrl(url)
-	//doc, err := html.Parse(strings.NewReader(s))
-	doc, err := html.Parse()
+	doc, err := html.Parse(strings.NewReader(s))
 	if err != nil {
 		fmt.Printf("findlinks1: %v\n", err)
 	}
 
 	forEachElement(doc, startElement, endElement)
 
+}
+
+func TestDeferred1(t *testing.T) {
+	a, b := 1, 2
+
+	defer func() {
+		fmt.Println(a, b)
+
+		a = a * 3
+		b = 0
+
+		fmt.Println(a, b)
+
+	}()
+
+	a, b = 10, 20
+
+	fmt.Printf("----->%d\t%d\n", a, b)
+
+}
+
+func TestDeferred2(t *testing.T) {
+	a, b := 1, 2
+
+	defer func(a, b int) {
+		fmt.Println(a, b)
+
+		a = a * 3
+		b = 0
+
+		fmt.Println(a, b)
+
+	}(a, b)
+
+	a, b = 10, 20
+
+	fmt.Printf("----->%d\t%d\n", a, b)
+
+}
+func TestDeferred3(t *testing.T) {
+	a, b := 1, 2
+
+	defer sh(a, b)
+
+	a, b = 10, 20
+
+	fmt.Printf("----->%d\t%d\n", a, b)
+
+}
+
+func sh(a, b int) {
+	fmt.Println(a, b)
+
+	a = a * 3
+	b = 0
+
+	fmt.Println(a, b)
+
+}
+
+func TestClosure(t *testing.T) {
+	f2 := f1
+	fmt.Println(f2(1))
+	fmt.Println("---------")
+	fmt.Println(f2(1))
+
+	io.Copy()
+}
+
+func f1(i int) (b int) {
+	b = i + 1
+	p := func(c int) (l int) {
+		l = 9
+		l += c
+		return
+	}(b)
+	b++
+	b = p + 1
+	fmt.Println(b)
+	fmt.Println(p)
+	return
 }
