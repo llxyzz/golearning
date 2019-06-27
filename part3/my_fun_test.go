@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"golang.org/x/net/html"
 	"golearning/part1"
-	"io"
 	"strings"
 	"testing"
 )
@@ -149,7 +148,6 @@ func TestClosure(t *testing.T) {
 	fmt.Println("---------")
 	fmt.Println(f2(1))
 
-	io.Copy()
 }
 
 func f1(i int) (b int) {
@@ -164,4 +162,10 @@ func f1(i int) (b int) {
 	fmt.Println(b)
 	fmt.Println(p)
 	return
+}
+
+func TestFetchUrl(t *testing.T) {
+	url := "https://www.qq.com"
+	n := fetchUrl(url)
+	fmt.Printf("网页的大小：%d\n", n)
 }

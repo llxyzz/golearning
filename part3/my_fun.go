@@ -3,6 +3,11 @@ package part3
 import (
 	"fmt"
 	"golang.org/x/net/html"
+	"io"
+	"log"
+	"net/http"
+	"os"
+	"path"
 )
 
 //Go函数的返回值变量能被提前声明，并且作用于整个函数的区块内
@@ -70,4 +75,32 @@ func forEachElement(n *html.Node, pre, end func(n *html.Node)) {
 	if end != nil {
 		end(n)
 	}
+}
+
+//将获取的URL页面输出要文件中去
+func fetchUrl(url string) (n int64) {
+	resp, err := http.Get(url)
+	if err != nil {
+		log.Fatalf("fetch url failed: %v\n", err)
+		return
+	}
+	defer resp.Body.Close()
+
+	localName := path.Base(resp.Request.URL.Path)
+	if localName == "/" || localName == "." {
+		localName = "/index.html"
+	}
+
+	file, err := os.Create("F:/test/" + localName)
+	if err != nil {
+		log.Fatalf("create file failed: %v\n", err)
+		return
+	}
+
+	n, err = io.Copy(file, resp.Body)
+	if closeErr := file.Close(); err != nil {
+		err = closeErr
+	}
+	fmt.Println("抓取完成")
+	return
 }
