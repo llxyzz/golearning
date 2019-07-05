@@ -12,4 +12,12 @@ func TestMyMethod(t *testing.T) {
 
 	fmt.Println(hour.Seconds())
 
+	p := Sub{1, 2}
+
+	fmt.Println(p.getSubtraction(p))
+
+}
+
+func TestCache(t *testing.T) {
+
 }

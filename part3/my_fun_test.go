@@ -6,6 +6,7 @@ import (
 	"golearning/part1"
 	"strings"
 	"testing"
+	"time"
 )
 
 func TestOne(t *testing.T) {
@@ -143,10 +144,15 @@ func sh(a, b int) {
 }
 
 func TestClosure(t *testing.T) {
-	f2 := f1
-	fmt.Println(f2(1))
-	fmt.Println("---------")
-	fmt.Println(f2(1))
+	//f2 := f1
+	//fmt.Println(f2(1))
+	//fmt.Println("---------")
+	//fmt.Println(f2(1))
+
+	fmt.Println(time.Now().Format("2006-01-02"))
+
+	s := "2019-09-12"
+	fmt.Println(strings.Replace(s, "-", "", -1))
 
 }
 
