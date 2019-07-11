@@ -12,12 +12,21 @@ func TestMyMethod(t *testing.T) {
 
 	fmt.Println(hour.Seconds())
 
-	p := Sub{1, 2}
+	n1 := Num{1, 2}
 
-	fmt.Println(p.getSubtraction(p))
+	fmt.Println(n1.getSubtraction(n1))
 
+	n2 := &Num{10, 20}
+	fmt.Println(n2.getPlus(n1))
+
+	var cn ColorNum
+	cn.X = 1
+	fmt.Println(cn)
+	cn.Num.X = 2
+	fmt.Println(cn)
 }
 
 func TestCache(t *testing.T) {
-
+	v := Lookup("123")
+	fmt.Println(v)
 }

@@ -1,9 +1,35 @@
 package part3
 
-type Sub struct {
+import (
+	"image/color"
+	"sync"
+)
+
+type Num struct {
 	X, Y float64
 }
 
-func (s Sub) getSubtraction(t Sub) float64 {
+type ColorNum struct {
+	Num
+	Color color.RGBA
+}
+
+func (s Num) getSubtraction(t Num) float64 {
 	return s.X - t.Y
+}
+
+func (s *Num) getPlus(t Num) float64 {
+	return s.X + t.Y
+}
+
+var cache = struct {
+	sync.Mutex
+	mapping map[string]string
+}{}
+
+func Lookup(key string) string {
+	cache.Lock()
+	v := cache.mapping[key]
+	cache.Unlock()
+	return v
 }
