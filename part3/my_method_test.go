@@ -24,6 +24,7 @@ func TestMyMethod(t *testing.T) {
 	fmt.Println(cn)
 	cn.Num.X = 2
 	fmt.Println(cn)
+
 }
 
 func TestCache(t *testing.T) {

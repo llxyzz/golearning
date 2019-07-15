@@ -14,6 +14,11 @@ type ColorNum struct {
 	Color color.RGBA
 }
 
+type Person struct {
+	name string
+	age  int
+}
+
 func (s Num) getSubtraction(t Num) float64 {
 	return s.X - t.Y
 }
